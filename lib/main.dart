@@ -33,22 +33,35 @@ class MainApp extends StatelessWidget {
                 ),
               ),
               TextField(
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                     hintText: 'Input a Number', border: OutlineInputBorder()),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ElevatedButton(onPressed: () {
-                    
-                  }, child: Container(
-                    width: 100,
-                    child: Text('Search', style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white), textAlign: TextAlign.center,)), style: ButtonStyle(
-                    
-                  ),),
                   ElevatedButton(
-                      onPressed: () {}, child: Text('Get Random Trivia')),
-                      
+                    onPressed: () {},
+                    child: Container(
+                        width: 120,
+                        child: Text(
+                          'Search',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),
+                          textAlign: TextAlign.center,
+                        )),
+                    style: ButtonStyle(),
+                  ),
+                  ElevatedButton(
+                      onPressed: () {},
+                      child: Text(
+                        'Get Random Trivia',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      )),
                 ],
               )
             ],
