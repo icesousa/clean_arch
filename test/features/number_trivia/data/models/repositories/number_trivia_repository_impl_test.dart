@@ -41,7 +41,6 @@ void main() {
 
     when(() => mockLocalDataSource.cacheNumberTrivia(any())).thenAnswer(
         (_) async => NumberTriviaModel(text: 'test trivia', number: 1));
-    when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
   });
 
   group('GetConcreteNumberTrivia', () {
