@@ -24,13 +24,13 @@ class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource {
 
   @override
   Future<NumberTriviaModel> getConcreteNumberTrivia(int number) async =>
-      _getTriviaFrom(number.toString());
+      _getTriviaFrom(number);
 
   @override
   Future<NumberTriviaModel> getRandomNumberTrivia() async =>
       _getTriviaFrom('random');
 
-  Future<NumberTriviaModel> _getTriviaFrom(String endpoint) async {
+  Future<NumberTriviaModel> _getTriviaFrom<T>(T endpoint) async {
     Uri randomEndPoint = Uri.http('numbersapi.com', '/$endpoint');
 
     final result = await client
