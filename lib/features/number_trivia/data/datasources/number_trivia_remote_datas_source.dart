@@ -15,8 +15,6 @@ abstract class NumberTriviaRemoteDataSource {
   Future<NumberTriviaModel> getRandomNumberTrivia();
 }
 
-
-
 class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource {
   final http.Client client;
 
