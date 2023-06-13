@@ -26,7 +26,7 @@ class Params extends Equatable {
   final int number;
 
   // Construtor que recebe o número
-  Params(this.number);
+  Params({ required this.number});
 
   // Sobrescreve o método de comparação de igualdade para que a classe seja tratada como imutável
   @override

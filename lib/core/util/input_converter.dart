@@ -4,8 +4,9 @@ import '../error/failures.dart';
 
 class InputConverter {
   Either<Failure, int> stringToUnsignedInteger(String str) {
-    final integer = int.parse(str);
     try {
+      final integer = int.parse(str);
+
       if (integer < 0) throw FormatException();
       return Right(integer);
     } on FormatException {

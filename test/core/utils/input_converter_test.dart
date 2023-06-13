@@ -1,7 +1,6 @@
 import 'package:clean_arch/core/util/input_converter.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 
 void main() {
   InputConverter inputConverter;
@@ -21,7 +20,7 @@ void main() {
     });
 
     test('should throw InvalidInputFailure when the string is not an int', () {
-      final str = 'abc';
+      final str = 'tata';
       final result = inputConverter.stringToUnsignedInteger(str);
 
       expect(result, Left(invalidInputFailure()));
@@ -33,5 +32,8 @@ void main() {
 
       expect(result, Left(invalidInputFailure()));
     });
+
+    
+
   });
 }
