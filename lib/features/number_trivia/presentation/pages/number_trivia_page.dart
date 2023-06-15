@@ -22,34 +22,35 @@ class NumberTriviaPage extends StatelessWidget {
       create: (_) => sl<NumberTriviaBloc>(),
       child: Center(
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               BlocBuilder<NumberTriviaBloc, NumberTriviaState>(
                 builder: (context, state) {
-                  if (state.status == NumberTriviaStatus.intial) {
-                    return MessageDisplay(message: 'Start Searching');
-                  } else if (state.status == NumberTriviaStatus.loading) {
-                    return LoadingWidget();
-                  } else if (state.status == NumberTriviaStatus.success) {
-                    return TriviaDisplay(numberTrivia: state.numberTrivia);
-                  } else if (state.status == NumberTriviaStatus.error) {
+                    if (state is Empty) {
+                    return const MessageDisplay(message: 'Start Searching');
+                  } else if (state is Loading) {
+                    return const LoadingWidget();
+                  } else if (state is Loaded) {
+                    return TriviaDisplay(numberTrivia: state.trivia);
+                  } else if (state is Error) {
                     return MessageDisplay(message: state.message);
                   }
-                  return MessageDisplay(message: 'Start');
-                  // if (state is Empty) {
+                  return const MessageDisplay(message: 'Start');
+                  // if (state.status == NumberTriviaStatus.intial) {
                   //   return MessageDisplay(message: 'Start Searching');
-                  // } else if (state is Loading) {
+                  // } else if (state.status == NumberTriviaStatus.loading) {
                   //   return LoadingWidget();
-                  // } else if (state is Loaded) {
-                  //   return TriviaDisplay(numberTrivia: state.trivia);
-                  // } else if (state is Error) {
+                  // } else if (state.status == NumberTriviaStatus.success) {
+                  //   return TriviaDisplay(numberTrivia: state.numberTrivia);
+                  // } else if (state.status == NumberTriviaStatus.error) {
                   //   return MessageDisplay(message: state.message);
                   // }
-                  // return MessageDisplay(message: 'Start');
+                 
+                
                 },
               ),
-              TriviaControls(),
+              const TriviaControls(),
             ],
           ),
         ),
@@ -66,7 +67,7 @@ class TriviaControls extends StatefulWidget {
 }
 
 class _TriviaControlsState extends State<TriviaControls> {
-   String inputstr = '1';
+  String inputstr = '1';
 
   @override
   Widget build(BuildContext context) {
@@ -74,13 +75,11 @@ class _TriviaControlsState extends State<TriviaControls> {
       children: [
         TextField(
           onChanged: (value) {
-            
             inputstr = value;
-          
-          print(inputstr);
+            print(inputstr);
           },
           keyboardType: TextInputType.number,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
               hintText: 'Input a Number', border: OutlineInputBorder()),
         ),
         Row(
@@ -88,9 +87,10 @@ class _TriviaControlsState extends State<TriviaControls> {
           children: [
             Expanded(
               child: ElevatedButton(
-                onPressed: dispatchConcrete,
+                onPressed: () => dispatchConcrete(context),
+                style: const ButtonStyle(),
                 child: Container(
-                    child: Text(
+                    child: const Text(
                   'Search',
                   style: TextStyle(
                       fontSize: 16,
@@ -98,16 +98,17 @@ class _TriviaControlsState extends State<TriviaControls> {
                       color: Colors.white),
                   textAlign: TextAlign.center,
                 )),
-                style: ButtonStyle(),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
             Expanded(
               child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
+                  onPressed: () {
+                    dispatchRandom(context);
+                  },
+                  child: const Text(
                     'Get Random Trivia',
                     style: TextStyle(
                       color: Colors.white,
@@ -120,8 +121,11 @@ class _TriviaControlsState extends State<TriviaControls> {
     );
   }
 
-  void dispatchConcrete() {
-    BlocProvider.of<NumberTriviaBloc>(context)
-        .add(GetTriviaForConcreteNumber(inputstr));
+  void dispatchConcrete(BuildContext context) {
+    context.read<NumberTriviaBloc>().add(GetTriviaForConcreteNumber(inputstr));
+  }
+
+  void dispatchRandom(BuildContext context) {
+    context.read<NumberTriviaBloc>().add(GetTriviaForRandomNumber());
   }
 }

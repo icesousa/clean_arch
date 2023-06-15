@@ -12,14 +12,14 @@ import '../../../../fixtures/fixture_reader.dart';
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 
 void main() {
-  final tNumberTriviaModel = NumberTriviaModel(text: 'test Trivia', number: 1);
+  const tNumberTriviaModel = NumberTriviaModel(text: 'test Trivia', number: 1);
   late NumberTriviaLocalDataSourceImpl dataSource;
   late MockSharedPreferences mockSharedPreferences;
   setUp(() {
     mockSharedPreferences = MockSharedPreferences();
     dataSource = NumberTriviaLocalDataSourceImpl(
         sharedPreferences: mockSharedPreferences);
-    registerFallbackValue(NumberTriviaModel(text: 'test trivia', number: 1));
+    registerFallbackValue(const NumberTriviaModel(text: 'test trivia', number: 1));
   });
 
   group('getLastNumberTrivia', () {

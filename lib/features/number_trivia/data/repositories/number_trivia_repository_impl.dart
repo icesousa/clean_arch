@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:clean_arch/core/error/failures.dart';
 import 'package:clean_arch/features/number_trivia/data/datasources/number_trivia_local_data_source.dart';
 import 'package:clean_arch/features/number_trivia/data/datasources/number_trivia_remote_datas_source.dart';
@@ -12,7 +14,7 @@ import '../../domain/repositories/number_trivia_repository.dart';
 import '../models/number_trivia_model.dart';
 // Importação de bibliotecas e arquivos necessários.
 
-typedef Future<NumberTriviaModel> _ConcreteOrRandomChoose();
+typedef _ConcreteOrRandomChoose = Future<NumberTriviaModel> Function();
 
 // O repositório implementa uma interface definida no domínio do aplicativo.
 //Isso é chamado de princípio de inversão de dependência: as camadas de alto nível (domínio)
@@ -51,7 +53,7 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
 
   // Este método auxiliar é usado para evitar a duplicação de código entre os métodos getConcreteNumberTrivia e getRandomNumberTrivia.
   // Ele aceita uma função que retorna um Future<NumberTriviaModel>, que é o tipo de dado que ambas as fontes de dados retornam.
-  Future<Either<Failure, NumberTriviaModel>> _getTrivia(
+  Future<Either<Failure, NumberTrivia>> _getTrivia(
       _ConcreteOrRandomChoose getConcreteOrRandom) async {
     // Se estiver conectado à internet, tente obter dados da fonte remota.
     if (await networkInfo.isConnected) {
@@ -59,10 +61,13 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
         final remoteTrivia = await getConcreteOrRandom();
         await localDataSource
             .cacheNumberTrivia(remoteTrivia); // Cache the data for future use.
-        return Future.value(
+            print('$remoteTrivia');
+        return  Future.value(
             Right(remoteTrivia)); // Use Right to indicate success.
       } on ServerException {
         // Se ocorrer um ServerException, retorne um ServerFailure. Use Left para indicar falha.
+        return Left(ServerFailure());
+      } on SocketException{
         return Left(ServerFailure());
       }
     } else {

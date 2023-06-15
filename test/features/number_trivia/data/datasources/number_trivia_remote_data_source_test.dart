@@ -31,14 +31,14 @@ void main() {
   }
 
   group('getConcreteNumberTrivia', () {
-    final tNumber = 1;
+    const tNumber = 1;
 
     final tNumberTriviaModelJson = json.decode(fixture('trivia_cached.json'));
     final tNumberTriviaModel =
         NumberTriviaModel.fromJson(tNumberTriviaModelJson);
 
     setUp(() {
-      final tNumber = 1;
+      const tNumber = 1;
 
       registerFallbackValue(Uri.http('numbersapi.com', '/$tNumber'));
     });

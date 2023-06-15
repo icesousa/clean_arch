@@ -7,15 +7,15 @@ class InputConverter {
     try {
       final integer = int.parse(str);
 
-      if (integer < 0) throw FormatException();
+      if (integer < 0) throw const FormatException();
       return Right(integer);
     } on FormatException {
-      return Left(invalidInputFailure());
+      return Left(InvalidInputFailure());
     }
   }
 }
 
-class invalidInputFailure extends Failure {
+class InvalidInputFailure extends Failure {
   @override
   List<Object?> get props => [];
 }

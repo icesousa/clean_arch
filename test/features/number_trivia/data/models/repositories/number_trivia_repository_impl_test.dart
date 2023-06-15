@@ -24,7 +24,7 @@ void main() {
   late MockNetworkInfo mockNetworkInfo;
 
   setUpAll(() {
-    registerFallbackValue(NumberTriviaModel(text: 'test trivia', number: 1));
+    registerFallbackValue(const NumberTriviaModel(text: 'test trivia', number: 1));
   });
 
   setUp(() {
@@ -37,19 +37,19 @@ void main() {
       networkInfo: mockNetworkInfo,
     );
     when(() => mockRemoteDataSource.getConcreteNumberTrivia(any())).thenAnswer(
-        (_) async => NumberTriviaModel(number: 1, text: 'test trivia'));
+        (_) async => const NumberTriviaModel(number: 1, text: 'test trivia'));
     when(() => mockRemoteDataSource.getRandomNumberTrivia()).thenAnswer(
-        (_) async => NumberTriviaModel(number: 123, text: 'test trivia'));
+        (_) async => const NumberTriviaModel(number: 123, text: 'test trivia'));
 
     when(() => mockLocalDataSource.cacheNumberTrivia(any())).thenAnswer(
-        (_) async => NumberTriviaModel(text: 'test trivia', number: 1));
+        (_) async => const NumberTriviaModel(text: 'test trivia', number: 1));
   });
 
   group('GetConcreteNumberTrivia', () {
-    final tNumber = 1;
-    final tNumberTriviaModel =
+    const tNumber = 1;
+    const tNumberTriviaModel =
         NumberTriviaModel(number: tNumber, text: 'test trivia');
-    final NumberTrivia tNumberTrivia = tNumberTriviaModel;
+    const NumberTrivia tNumberTrivia = tNumberTriviaModel;
 
     test('should check if the device is online', () async {
       when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
@@ -71,7 +71,7 @@ void main() {
 
         verify(() => mockRemoteDataSource.getConcreteNumberTrivia(tNumber));
 
-        expect(result, equals(Right(tNumberTrivia)));
+        expect(result, equals(const Right(tNumberTrivia)));
       });
 
       test(
@@ -115,7 +115,7 @@ void main() {
 
         verifyZeroInteractions(mockRemoteDataSource);
         verify(() => mockLocalDataSource.getLastNumberTrivia());
-        expect(result, equals(Right(tNumberTrivia)));
+        expect(result, equals(const Right(tNumberTrivia)));
       });
 
       test('should return  CacheFailure when there is no  cached data  present',
@@ -131,9 +131,9 @@ void main() {
   });
 
   group('GetRandomNumberTrivia', () {
-    final tNumberTriviaModel =
+    const tNumberTriviaModel =
         NumberTriviaModel(number: 123, text: 'test trivia');
-    final NumberTrivia tNumberTrivia = tNumberTriviaModel;
+    const NumberTrivia tNumberTrivia = tNumberTriviaModel;
 
     test('should check if the device is online', () async {
       when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
@@ -155,7 +155,7 @@ void main() {
 
         verify(() => mockRemoteDataSource.getRandomNumberTrivia());
 
-        expect(result, equals(Right(tNumberTrivia)));
+        expect(result, equals(const Right(tNumberTrivia)));
       });
 
       test(
@@ -199,7 +199,7 @@ void main() {
 
         verifyZeroInteractions(mockRemoteDataSource);
         verify(() => mockLocalDataSource.getLastNumberTrivia());
-        expect(result, equals(Right(tNumberTrivia)));
+        expect(result, equals(const Right(tNumberTrivia)));
       });
 
       test('should return  CacheFailure when there is no  cached data  present',

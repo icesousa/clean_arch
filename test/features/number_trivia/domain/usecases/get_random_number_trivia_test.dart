@@ -20,14 +20,14 @@ void main() {
 
   test('should get trivia from the repository', () async {
     
-    final tNumbertTrivia = NumberTrivia(text: 'test', number: 1);
+    const tNumbertTrivia = NumberTrivia(text: 'test', number: 1);
 
     when(() => mockNumberTriviaRepository.getRandomNumberTrivia())
-        .thenAnswer((_) async => Right(tNumbertTrivia));
+        .thenAnswer((_) async => const Right(tNumbertTrivia));
 
     final result = await usecase(NoParams());
 
-    expect(result, Right(tNumbertTrivia));
+    expect(result, const Right(tNumbertTrivia));
 
     verify(() => mockNumberTriviaRepository.getRandomNumberTrivia());
     verifyNoMoreInteractions(mockNumberTriviaRepository);

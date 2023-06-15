@@ -18,15 +18,15 @@ void main() {
   });
 
   test('should get trivia for the number from repository', () async {
-    final tNumber = 1;
-    final tNumbertTrivia = NumberTrivia(text: 'test', number: 1);
+    const tNumber = 1;
+    const tNumbertTrivia = NumberTrivia(text: 'test', number: 1);
 
     when(() => mockNumberTriviaRepository.getConcreteNumberTrivia(any()))
-        .thenAnswer((_) async => Right(tNumbertTrivia));
+        .thenAnswer((_) async => const Right(tNumbertTrivia));
 
-    final result = await usecase(Params(number: tNumber));
+    final result = await usecase(const Params(number: tNumber));
 
-    expect(result, Right(tNumbertTrivia));
+    expect(result, const Right(tNumbertTrivia));
 
     verify(() => mockNumberTriviaRepository.getConcreteNumberTrivia(tNumber));
   });

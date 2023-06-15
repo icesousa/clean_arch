@@ -18,6 +18,6 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData(primaryColor: Colors.blue.shade800),
-        home: NumberTriviaPage());
+        home: const NumberTriviaPage());
   }
 }

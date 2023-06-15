@@ -1,7 +1,7 @@
 import 'package:clean_arch/features/weather_forecast/domain/entities/weaterforecast.dart';
 
 class WeatherForecastModel extends WeatherForecast {
-  WeatherForecastModel(
+  const WeatherForecastModel(
       {required super.city,
       required super.temperature,
       required super.weather});

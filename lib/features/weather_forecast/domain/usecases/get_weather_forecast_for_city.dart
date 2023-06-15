@@ -18,7 +18,7 @@ class GetWeatherForecastForCity implements UseCase<WeatherForecast, Params> {
 
 class Params extends Equatable {
   final String cityName;
-  Params(this.cityName);
+  const Params(this.cityName);
 
   @override
   List<Object?> get props => [cityName];
