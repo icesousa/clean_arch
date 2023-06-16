@@ -37,7 +37,7 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
   @override
   Future<Either<Failure, NumberTrivia>> getConcreteNumberTrivia(
       int number) async {
-    return await _getTrivia(() {
+    return await _getTrivia(() async {
       return remoteDataSource.getConcreteNumberTrivia(number);
     });
   }
@@ -61,13 +61,11 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
         final remoteTrivia = await getConcreteOrRandom();
         await localDataSource
             .cacheNumberTrivia(remoteTrivia); // Cache the data for future use.
-            print('$remoteTrivia');
-        return  Future.value(
-            Right(remoteTrivia)); // Use Right to indicate success.
+        return (Right(remoteTrivia)); // Use Right to indicate success.
       } on ServerException {
         // Se ocorrer um ServerException, retorne um ServerFailure. Use Left para indicar falha.
         return Left(ServerFailure());
-      } on SocketException{
+      } on SocketException {
         return Left(ServerFailure());
       }
     } else {
